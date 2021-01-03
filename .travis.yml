@@ -1,0 +1,7 @@
+sudo: required
+servises:
+  - docker
+
+script:
+  - docker build -t impedance/node .
+  - docker images impedance/node
