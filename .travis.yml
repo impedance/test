@@ -5,3 +5,12 @@ servises:
 script:
   - docker build -t impedance/node .
   - docker images impedance/node
+
+before_deploy:
+  - docker login -u <2275399@gmail.com> -p <8z1RzR2W5g61>
+
+deploy:
+        provider: script
+        script: docker push impedance/node
+        on:
+                branch: master
