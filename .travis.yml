@@ -7,7 +7,7 @@ script:
   - docker images impedance/node
 
 before_deploy:
-  - docker login -u <2275399@gmail.com> -p <8z1RzR2W5g61>
+  - docker login -u <2275399@gmail.com> -p <a67fcf36-0c5a-4e6e-8bbf-a5622bc92c52>
 
 deploy:
         provider: script
