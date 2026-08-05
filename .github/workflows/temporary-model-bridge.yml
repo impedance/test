@@ -1,0 +1,29 @@
+name: Temporary model bridge
+
+on:
+  pull_request:
+    paths:
+      - temporary-model-trigger.txt
+
+permissions:
+  contents: read
+
+jobs:
+  package-model:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download multilingual Whisper tiny model
+        run: |
+          set -euo pipefail
+          curl -L --fail --retry 5 --retry-delay 5 \
+            -o ggml-tiny.bin \
+            https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-tiny.bin
+          echo 'be07e048e1e599ad46341c8d2a135645097a538221678b7acdd1b1919c6e1b21  ggml-tiny.bin' | sha256sum -c -
+          zip -9 whisper-model.zip ggml-tiny.bin
+      - name: Upload model archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: whisper-model
+          path: whisper-model.zip
+          if-no-files-found: error
+          retention-days: 1
